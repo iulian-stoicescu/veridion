@@ -27,17 +27,16 @@ public class DataExtractorService {
         this.helperService = helperService;
     }
 
-    public List<ExtractedData> extractData(boolean all) {
+    public List<ExtractedData> extractData(int index) {
         List<ExtractedData> extractedDataList = new ArrayList<>();
 
         List<String> websites = helperService.getWebsites();
         if (websites.isEmpty()) {
             return extractedDataList;
         }
-        if (!all) {
-            websites = websites.subList(0, 2);
-        }
+        websites = websites.subList(index, index + 1);
         log.info("{} websites were read from the config file", websites.size());
+        log.info("Processing websites: {}", String.join(", ", websites));
 
         websites.forEach(website -> {
             try {
