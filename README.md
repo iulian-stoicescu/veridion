@@ -12,7 +12,7 @@ saved in an elasticsearch cluster.
 
 ### How it works (in my case, on a Windows machine):
 
-*Disclaimer: Kubernetes and Elasticsearch are completely new technologies to me, therefore some details that I present
+*Disclaimer: Kubernetes and Kafka are completely new technologies to me, therefore some details that I present
 here might be obvious and unnecessary*
 
 Prerequisites: Installed Docker Desktop application and enabled Kubernetes
