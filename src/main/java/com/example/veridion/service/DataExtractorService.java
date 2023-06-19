@@ -1,4 +1,4 @@
-package com.example.veridion;
+package com.example.veridion.service;
 
 import com.example.veridion.model.ExtractedData;
 import lombok.extern.slf4j.Slf4j;
@@ -34,13 +34,15 @@ public class DataExtractorService {
         if (domains.isEmpty()) {
             return extractedDataList;
         }
-        domains = domains.subList(10 * index, 10 * (index + 1));
+        int startIndex = 10 * index;
+        int stopIndex = Math.min(10 * (index + 1), domains.size());
+        domains = domains.subList(startIndex, stopIndex);
         log.info("{} domains were read from the config file", domains.size());
         log.info("Processing domains: {}", String.join(", ", domains));
 
         domains.forEach(domain -> {
             try {
-                Document document = Jsoup.connect(domain).get();
+                Document document = Jsoup.connect("https://" + domain).get();
 
                 extractedDataList.add(new ExtractedData(domain,
                         new ArrayList<>(extractPhoneNumbers(document)),

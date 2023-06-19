@@ -1,4 +1,4 @@
-package com.example.veridion;
+package com.example.veridion.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ public class HelperService {
     public List<String> getDomains() {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            return Arrays.asList(mapper.readValue(TypeReference.class.getResourceAsStream("/sample-websites.json"), String[].class));
+            return Arrays.asList(mapper.readValue(TypeReference.class.getResourceAsStream("/static/sample-websites.json"), String[].class));
         } catch (IOException e) {
             log.warn("File sample-websites.json could not be read!");
             return List.of();

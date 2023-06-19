@@ -1,6 +1,8 @@
 package com.example.veridion;
 
 import com.example.veridion.model.ExtractedData;
+import com.example.veridion.service.DataExtractorService;
+import com.example.veridion.service.HttpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,10 +20,12 @@ public class KafkaConsumer {
     private String hostname;
 
     private final DataExtractorService dataExtractorService;
+    private final HttpService httpService;
 
     @Autowired
-    public KafkaConsumer(DataExtractorService dataExtractorService) {
+    public KafkaConsumer(DataExtractorService dataExtractorService, HttpService httpService) {
         this.dataExtractorService = dataExtractorService;
+        this.httpService = httpService;
     }
 
     @KafkaListener(id = "${HOSTNAME}-consumer", groupId = "${HOSTNAME}-group", topics = "${kafka.topic.name}")
@@ -30,6 +34,7 @@ public class KafkaConsumer {
 
         List<ExtractedData> dataList = this.dataExtractorService.extractData(getPodIndex());
         log.info("Extracted data: {}", dataList.stream().map(ExtractedData::toString).collect(Collectors.joining(", ")));
+        this.httpService.updateCompanyData(dataList);
     }
 
     public int getPodIndex() {
