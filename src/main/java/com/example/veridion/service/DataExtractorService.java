@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Service
 public class DataExtractorService {
 
-    private static final int DOMAINS_NUMBER = 10;
+    private static final int DOMAINS_NUMBER = 100;
     private static final String PHONE_NUMBER_REGEX = "^\\(?\\d{3}\\)?[- ]?\\d{3}[- ]?\\d{4}$";
     private static final String USA_ADDRESS_REGEX = "^(\\d{1,}) [a-zA-Z0-9\\s]+(\\,)? [a-zA-Z]+(\\,)? [A-Z]{2} [0-9]{5,6}$";
 
