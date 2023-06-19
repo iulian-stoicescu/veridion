@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @Service
 public class DataExtractorService {
 
+    private static final int DOMAINS_NUMBER = 10;
     private static final String PHONE_NUMBER_REGEX = "^\\(?\\d{3}\\)?[- ]?\\d{3}[- ]?\\d{4}$";
     private static final String USA_ADDRESS_REGEX = "^(\\d{1,}) [a-zA-Z0-9\\s]+(\\,)? [a-zA-Z]+(\\,)? [A-Z]{2} [0-9]{5,6}$";
 
@@ -34,8 +35,8 @@ public class DataExtractorService {
         if (domains.isEmpty()) {
             return extractedDataList;
         }
-        int startIndex = 10 * index;
-        int stopIndex = Math.min(10 * (index + 1), domains.size());
+        int startIndex = DOMAINS_NUMBER * index;
+        int stopIndex = Math.min(DOMAINS_NUMBER * (index + 1), domains.size());
         domains = domains.subList(startIndex, stopIndex);
         log.info("{} domains were read from the config file", domains.size());
         log.info("Processing domains: {}", String.join(", ", domains));
