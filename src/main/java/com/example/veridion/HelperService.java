@@ -11,7 +11,7 @@ import java.util.List;
 @Slf4j
 @Service
 public class HelperService {
-    public List<String> getWebsites() {
+    public List<String> getDomains() {
         ObjectMapper mapper = new ObjectMapper();
         try {
             return Arrays.asList(mapper.readValue(TypeReference.class.getResourceAsStream("/sample-websites.json"), String[].class));

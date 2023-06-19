@@ -30,24 +30,24 @@ public class DataExtractorService {
     public List<ExtractedData> extractData(int index) {
         List<ExtractedData> extractedDataList = new ArrayList<>();
 
-        List<String> websites = helperService.getWebsites();
-        if (websites.isEmpty()) {
+        List<String> domains = helperService.getDomains();
+        if (domains.isEmpty()) {
             return extractedDataList;
         }
-        websites = websites.subList(index, index + 1);
-        log.info("{} websites were read from the config file", websites.size());
-        log.info("Processing websites: {}", String.join(", ", websites));
+        domains = domains.subList(10 * index, 10 * (index + 1));
+        log.info("{} domains were read from the config file", domains.size());
+        log.info("Processing domains: {}", String.join(", ", domains));
 
-        websites.forEach(website -> {
+        domains.forEach(domain -> {
             try {
-                Document document = Jsoup.connect(website).get();
+                Document document = Jsoup.connect(domain).get();
 
-                extractedDataList.add(new ExtractedData(website,
+                extractedDataList.add(new ExtractedData(domain,
                         new ArrayList<>(extractPhoneNumbers(document)),
                         new ArrayList<>(extractSocialMediaLinks(document)),
                         new ArrayList<>(extractAddresses(document))));
             } catch (IOException e) {
-                log.warn("Failed to extract data for {}", website);
+                log.warn("Failed to extract data for {}", domain);
             }
         });
         return extractedDataList;
