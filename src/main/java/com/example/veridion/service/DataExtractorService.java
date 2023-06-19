@@ -45,10 +45,13 @@ public class DataExtractorService {
             try {
                 Document document = Jsoup.connect("https://" + domain).get();
 
-                extractedDataList.add(new ExtractedData(domain,
-                        new ArrayList<>(extractPhoneNumbers(document)),
-                        new ArrayList<>(extractSocialMediaLinks(document)),
-                        new ArrayList<>(extractAddresses(document))));
+                List<String> phoneNumbers = new ArrayList<>(extractPhoneNumbers(document));
+                List<String> socialMediaLinks = new ArrayList<>(extractSocialMediaLinks(document));
+                List<String> addresses = new ArrayList<>(extractAddresses(document));
+                // add extracted data to the list only if we found anything, else doesn't make sense
+                if (!phoneNumbers.isEmpty() || !socialMediaLinks.isEmpty() || !addresses.isEmpty()) {
+                    extractedDataList.add(new ExtractedData(domain, phoneNumbers, socialMediaLinks, addresses));
+                }
             } catch (IOException e) {
                 log.warn("Failed to extract data for {}", domain);
             }
